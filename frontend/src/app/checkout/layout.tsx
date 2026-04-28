@@ -1,0 +1,12 @@
+import { CheckoutHeader } from "@/components/layout/CheckoutHeader";
+
+export default function CheckoutLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <>
+      <CheckoutHeader />
+      <main id="main-content" className="flex-grow bg-[var(--color-surface-container-low)]">
+        {children}
+      </main>
+    </>
+  );
+}
