@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Product, Category } from "@/types/product";
+
+export const dynamic = "force-dynamic";
 import { FilterSidebar } from "@/components/collection/FilterSidebar";
 import { CollectionGrid } from "@/components/collection/CollectionGrid";
 

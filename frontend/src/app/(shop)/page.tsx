@@ -3,6 +3,8 @@ import { NewArrivalsAsymmetric } from "@/components/home/NewArrivalsAsymmetric";
 import { ManifestoSection } from "@/components/home/ManifestoSection";
 import { Product } from "@/types/product";
 
+export const dynamic = "force-dynamic";
+
 async function getNewArrivals(): Promise<Product[]> {
   try {
     const res = await fetch(

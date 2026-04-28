@@ -1,6 +1,8 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductDetail, Product } from "@/types/product";
+
+export const dynamic = "force-dynamic";
 import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { CompleteTheLook } from "@/components/product/CompleteTheLook";

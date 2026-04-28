@@ -2,6 +2,8 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Category } from "@/types/product";
 
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Collections — EGHT",
   description: "Explore all EGHT Studios collections.",
