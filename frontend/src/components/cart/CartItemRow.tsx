@@ -134,7 +134,10 @@ export function CartItemRow({ item }: CartItemRowProps) {
                 <line x1="5" y1="12" x2="19" y2="12" />
               </svg>
             </button>
-            <span className="w-8 h-8 flex items-center justify-center text-label-caps font-bold text-[var(--color-on-surface)]">
+            <span
+              aria-label={`Quantity: ${item.quantity}`}
+              className="w-8 h-8 flex items-center justify-center text-label-caps font-bold text-[var(--color-on-surface)]"
+            >
               {item.quantity}
             </span>
             <button

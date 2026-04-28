@@ -22,7 +22,7 @@ export function ProductCard({ product, size = "md", priority = false }: ProductC
         {firstImage ? (
           <Image
             src={firstImage}
-            alt={product.name}
+            alt=""
             fill
             priority={priority}
             className="object-cover grayscale group-hover:scale-105 transition-transform duration-700 ease-out"

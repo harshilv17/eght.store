@@ -22,6 +22,7 @@ export function Accordion({ items }: AccordionProps) {
               stroke="currentColor"
               strokeWidth="1.5"
               className="transition-transform duration-200 group-open:rotate-180"
+              aria-hidden="true"
             >
               <polyline points="6 9 12 15 18 9" />
             </svg>
