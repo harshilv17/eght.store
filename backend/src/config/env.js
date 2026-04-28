@@ -1,9 +1,16 @@
 import 'dotenv/config';
 
 const required = [
-  'DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD',
   'JWT_SECRET', 'RAZORPAY_KEY_ID', 'RAZORPAY_KEY_SECRET'
 ];
+
+// Either DATABASE_URL or individual DB vars must be present
+const hasDatabaseUrl = !!process.env.DATABASE_URL;
+const hasIndividualDbVars = ['DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_USER', 'DB_PASSWORD'].every(key => !!process.env[key]);
+
+if (!hasDatabaseUrl && !hasIndividualDbVars) {
+  throw new Error('Missing database configuration. Please provide DATABASE_URL or individual DB_* variables.');
+}
 
 for (const key of required) {
   if (!process.env[key]) throw new Error(`Missing required env var: ${key}`);
@@ -13,6 +20,7 @@ export const env = {
   port: parseInt(process.env.PORT) || 4000,
   nodeEnv: process.env.NODE_ENV || 'development',
   db: {
+    url: process.env.DATABASE_URL,
     host: process.env.DB_HOST,
     port: parseInt(process.env.DB_PORT),
     name: process.env.DB_NAME,

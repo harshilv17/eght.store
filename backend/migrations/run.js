@@ -7,13 +7,15 @@ import 'dotenv/config';
 const { Client } = pg;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const client = new Client({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  database: process.env.DB_NAME,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-});
+const client = process.env.DATABASE_URL
+  ? new Client({ connectionString: process.env.DATABASE_URL, ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false })
+  : new Client({
+      host: process.env.DB_HOST,
+      port: process.env.DB_PORT,
+      database: process.env.DB_NAME,
+      user: process.env.DB_USER,
+      password: process.env.DB_PASSWORD,
+    });
 
 async function run() {
   await client.connect();
