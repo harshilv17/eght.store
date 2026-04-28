@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EGHT - Cart Drawer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c8c6c5",
+                        "outline": "#747878",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#858383",
+                        "on-background": "#1a1c1c",
+                        "inverse-primary": "#c8c6c5",
+                        "surface": "#f9f9f9",
+                        "secondary": "#5d5f5f",
+                        "primary": "#000000",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "tertiary-fixed": "#ffdcc3",
+                        "primary-container": "#1c1b1b",
+                        "on-tertiary-container": "#c76c00",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#000000",
+                        "surface-container-highest": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "outline-variant": "#c4c7c7",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#474646",
+                        "surface-bright": "#f9f9f9",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary-fixed": "#2f1500",
+                        "inverse-surface": "#2f3131",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-dim": "#dadada",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "surface-container": "#eeeeee",
+                        "secondary-container": "#dcdddd",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary-container": "#5f6161",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "on-surface-variant": "#444748",
+                        "surface-container-low": "#f3f3f4",
+                        "tertiary-container": "#2f1500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-edge": "40px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "120%", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "160%", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "100%", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "display-xl": ["120px", { "lineHeight": "100%", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "110%", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "160%", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            font-size: 24px;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased min-h-screen relative overflow-hidden">
+<!-- Mock Background Content to provide context for the drawer -->
+<header class="bg-surface-container-lowest full-width top-0 border-b border-outline-variant flex justify-between items-center w-full px-10 py-8 max-w-[1440px] mx-auto z-0 relative">
+<div class="flex gap-8 items-center">
+<span class="text-3xl font-black tracking-tighter text-primary">EGHT</span>
+</div>
+<nav class="hidden md:flex gap-8">
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">NEW ARRIVALS</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">COLLECTIONS</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">EDITORIAL</a>
+<a class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary transition-colors duration-200" href="#">ABOUT</a>
+</nav>
+<div class="flex gap-4 items-center">
+<span class="material-symbols-outlined cursor-pointer hover:text-primary text-on-surface-variant transition-colors">search</span>
+<span class="material-symbols-outlined cursor-pointer text-primary">shopping_bag</span>
+</div>
+</header>
+<main class="w-full max-w-[1440px] mx-auto px-margin-edge py-section-gap opacity-30 pointer-events-none filter blur-sm transition-all">
+<div class="grid grid-cols-12 gap-gutter">
+<div class="col-span-12 md:col-span-8">
+<img class="w-full h-[600px] object-cover" data-alt="editorial shot of models in brutalist architecture setting wearing avant-garde streetwear minimal fashion" src="https://lh3.googleusercontent.com/aida-public/AB6AXuATXQYAbUo7Qj0s_fkhB4zEuR1wq_99zweB_VFrqZbPxJr9CSP5LPn7jlS17RDWSP4OHtmwGQCOKrLca4Y4HAaSb0o7Fg7jizQmSXtVOMRyPiDLmzWcr1EglL8ZM6VK0NchG232p0e5mO_zG5mTvdetHxxMX0IlPD3mS71IaLPJYs6haa6nXs1-o8O0B-C5f8n6l-ffKP642JhYWXiA0LPKuyLIxpotVAlU7ZfK5bzqGPWYl5vZVLqD7g3AUD5oNVYRbLeR2dUanLo"/>
+</div>
+<div class="col-span-12 md:col-span-4 flex flex-col justify-end">
+<h1 class="font-display-xl text-display-xl text-primary leading-none tracking-tighter">ESSENTIAL<br/>CORE.</h1>
+</div>
+</div>
+</main>
+<!-- CART DRAWER OVERLAY & CONTAINER -->
+<div class="fixed inset-0 z-50 flex justify-end">
+<!-- Dimmed Background Overlay -->
+<div class="absolute inset-0 bg-primary/40 backdrop-blur-sm transition-opacity"></div>
+<!-- Drawer Panel -->
+<aside class="relative w-full max-w-[480px] bg-surface-container-lowest h-full flex flex-col shadow-none border-l border-outline-variant transform transition-transform translate-x-0">
+<!-- Drawer Header -->
+<div class="px-gutter py-6 flex justify-between items-center border-b border-outline-variant shrink-0">
+<div class="flex items-baseline gap-2">
+<h2 class="font-headline-md text-headline-md text-primary">CART</h2>
+<span class="font-body-md text-body-md text-on-surface-variant">(2)</span>
+</div>
+<button class="text-on-surface hover:text-secondary transition-colors group p-2 -mr-2">
+<span class="material-symbols-outlined group-active:scale-95 transition-transform" style="font-variation-settings: 'wght' 300;">close</span>
+</button>
+</div>
+<!-- Cart Items Scrollable Area -->
+<div class="flex-grow overflow-y-auto px-gutter py-8 flex flex-col gap-10">
+<!-- Cart Item 1 -->
+<div class="flex gap-6 group">
+<!-- Product Image -->
+<div class="w-[120px] h-[160px] shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="studio shot of heavy washed black oversized hooded sweatshirt flat lay on minimal light grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgmdyBZmVw2OtLc-fv4fkMtiGGUDT9bO7983rWzKdY58LVnQ3oHEc0qmr4wPaKzJ3vNhK_iKkhyfJTgod3y9BzF3VG4h1uGsTdHLIeqmqQNssvsZ387MRWBVSIPlaXac3IbKoIbH6dyNmsdSESvsC4zFZWhSvs5Vw0JyoBFZiV5xYEMRq0_X1YKhmHJEQThfsP2Frquqb00nZzeG4C9o7MZ5EInHNJXxuPvq2H1E7Rz79CDvkqXa2CWKUHVy6TEerV5yQGeNd6Fi8"/>
+</div>
+<!-- Product Details -->
+<div class="flex flex-col flex-grow justify-between py-1">
+<div>
+<div class="flex justify-between items-start gap-4">
+<h3 class="font-body-lg text-body-lg text-primary uppercase tracking-wide leading-tight">Washed Heavy<br/>Hoodie</h3>
+<span class="font-body-md text-body-md text-primary shrink-0">$185.00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 uppercase tracking-widest text-xs">Size: XL</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 uppercase tracking-widest text-xs">Color: Vintage Black</p>
+</div>
+<!-- Actions & Qty -->
+<div class="flex justify-between items-end mt-4">
+<!-- Minimal Qty Control -->
+<div class="flex items-center gap-4 border-b border-outline pb-1">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
+</button>
+<span class="font-body-md text-body-md text-primary tabular-nums">1</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+</button>
+</div>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline decoration-1 underline-offset-4 transition-colors">REMOVE</button>
+</div>
+</div>
+</div>
+<!-- Cart Item 2 -->
+<div class="flex gap-6 group">
+<!-- Product Image -->
+<div class="w-[120px] h-[160px] shrink-0 bg-surface-container relative">
+<img class="w-full h-full object-cover" data-alt="close up studio shot of structured raw denim jacket in deep indigo flat lay on minimal background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfTDWifsAVyCjJeXz6l8bZBzvxFIllIw7ST0gsfgJXMvUORHQNX76Lm6-zek2E4mOO8NdwEs8S5bT1ae0DkiHCHP8ER_Q4xkL7Uds3KbxM7StHxADdqryrr37G-ak6apcNEtdN3XivRqeSfNxr3hzTU9c3OOBPayePqW3J8QPEGJ3FBjXjr-HsG9PerQTgDoHae8-qctEVSCkjk5Vcb66TTtGsxEzPoYFh7TIn-lAhd4NSiF_AdF2-mFVDGgtlUq4SzUwkt2WhOH4"/>
+</div>
+<!-- Product Details -->
+<div class="flex flex-col flex-grow justify-between py-1">
+<div>
+<div class="flex justify-between items-start gap-4">
+<h3 class="font-body-lg text-body-lg text-primary uppercase tracking-wide leading-tight">Raw Selvedge<br/>Jacket</h3>
+<span class="font-body-md text-body-md text-primary shrink-0">$320.00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 uppercase tracking-widest text-xs">Size: L</p>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1 uppercase tracking-widest text-xs">Color: Deep Indigo</p>
+</div>
+<!-- Actions & Qty -->
+<div class="flex justify-between items-end mt-4">
+<!-- Minimal Qty Control -->
+<div class="flex items-center gap-4 border-b border-outline pb-1">
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">remove</span>
+</button>
+<span class="font-body-md text-body-md text-primary tabular-nums">1</span>
+<button class="text-on-surface-variant hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-size: 16px;">add</span>
+</button>
+</div>
+<button class="font-label-caps text-label-caps text-on-surface-variant hover:text-primary underline decoration-1 underline-offset-4 transition-colors">REMOVE</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Drawer Footer / Checkout Area -->
+<div class="px-gutter py-8 border-t border-outline-variant bg-surface-container-lowest shrink-0 flex flex-col gap-6">
+<!-- Subtotal -->
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<span class="font-label-caps text-label-caps text-on-surface-variant">SUBTOTAL</span>
+<span class="font-headline-md text-headline-md text-primary leading-none">$505.00</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm mt-2">Shipping &amp; taxes calculated at checkout.</p>
+</div>
+<!-- Primary Action -->
+<button class="w-full bg-primary text-on-primary font-label-caps text-label-caps py-5 px-8 hover:bg-inverse-surface transition-colors duration-300 active:scale-[0.98] flex justify-center items-center gap-4 group">
+                    PROCEED TO CHECKOUT
+                    <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform" style="font-size: 18px;">arrow_forward</span>
+</button>
+<!-- Secondary Info -->
+<div class="flex justify-center items-center gap-2 mt-2">
+<span class="material-symbols-outlined text-on-surface-variant" style="font-size: 14px;">lock</span>
+<span class="font-body-md text-body-md text-on-surface-variant text-xs tracking-wide">SECURE ENCRYPTED CHECKOUT</span>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

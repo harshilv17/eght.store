@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>EGHT - Product Page</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary-fixed-dim": "#c8c6c5",
+                        "outline": "#747878",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb77d",
+                        "on-error": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "on-primary-container": "#858383",
+                        "on-background": "#1a1c1c",
+                        "inverse-primary": "#c8c6c5",
+                        "surface": "#f9f9f9",
+                        "secondary": "#5d5f5f",
+                        "primary": "#000000",
+                        "surface-container-high": "#e8e8e8",
+                        "secondary-fixed-dim": "#c6c6c7",
+                        "tertiary-fixed": "#ffdcc3",
+                        "primary-container": "#1c1b1b",
+                        "on-tertiary-container": "#c76c00",
+                        "on-secondary": "#ffffff",
+                        "tertiary": "#000000",
+                        "surface-container-highest": "#e2e2e2",
+                        "background": "#f9f9f9",
+                        "error": "#ba1a1a",
+                        "on-primary-fixed": "#1c1b1b",
+                        "outline-variant": "#c4c7c7",
+                        "on-error-container": "#93000a",
+                        "on-primary-fixed-variant": "#474646",
+                        "surface-bright": "#f9f9f9",
+                        "surface-tint": "#5f5e5e",
+                        "on-tertiary-fixed": "#2f1500",
+                        "inverse-surface": "#2f3131",
+                        "primary-fixed": "#e5e2e1",
+                        "inverse-on-surface": "#f0f1f1",
+                        "on-secondary-fixed-variant": "#454747",
+                        "secondary-fixed": "#e2e2e2",
+                        "surface-dim": "#dadada",
+                        "surface-container-lowest": "#ffffff",
+                        "on-surface": "#1a1c1c",
+                        "surface-container": "#eeeeee",
+                        "secondary-container": "#dcdddd",
+                        "on-secondary-fixed": "#1a1c1c",
+                        "on-secondary-container": "#5f6161",
+                        "surface-variant": "#e2e2e2",
+                        "on-tertiary-fixed-variant": "#6e3900",
+                        "on-surface-variant": "#444748",
+                        "surface-container-low": "#f3f3f4",
+                        "tertiary-container": "#2f1500"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "section-gap": "120px",
+                        "margin-edge": "40px",
+                        "unit": "8px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-caps": ["Inter"],
+                        "display-xl": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["32px", { "lineHeight": "120%", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "body-md": ["16px", { "lineHeight": "160%", "letterSpacing": "0", "fontWeight": "400" }],
+                        "label-caps": ["12px", { "lineHeight": "100%", "letterSpacing": "0.1em", "fontWeight": "700" }],
+                        "display-xl": ["120px", { "lineHeight": "100%", "letterSpacing": "-0.04em", "fontWeight": "700" }],
+                        "headline-lg": ["48px", { "lineHeight": "110%", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "160%", "letterSpacing": "0", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background antialiased selection:bg-primary selection:text-on-primary">
+<!-- TopNavBar -->
+<nav class="bg-white dark:bg-zinc-950 docked full-width top-0 border-b border-zinc-100 dark:border-zinc-900 sticky z-50">
+<div class="flex justify-between items-center w-full px-10 py-8 max-w-[1440px] mx-auto">
+<div class="flex gap-8">
+<a class="font-['Inter'] uppercase tracking-[0.2em] text-[11px] font-semibold text-zinc-400 dark:text-zinc-600 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform" href="#">NEW ARRIVALS</a>
+<a class="font-['Inter'] uppercase tracking-[0.2em] text-[11px] font-semibold text-zinc-900 dark:text-zinc-50 border-b-2 border-zinc-900 dark:border-zinc-50 pb-1 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform" href="#">COLLECTIONS</a>
+<a class="font-['Inter'] uppercase tracking-[0.2em] text-[11px] font-semibold text-zinc-400 dark:text-zinc-600 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform" href="#">EDITORIAL</a>
+<a class="font-['Inter'] uppercase tracking-[0.2em] text-[11px] font-semibold text-zinc-400 dark:text-zinc-600 hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform" href="#">ABOUT</a>
+</div>
+<a class="text-3xl font-black tracking-tighter text-zinc-900 dark:text-zinc-50" href="#">EGHT</a>
+<div class="flex gap-4 text-zinc-900 dark:text-zinc-50">
+<button class="hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform"><span class="material-symbols-outlined">search</span></button>
+<button class="hover:text-orange-600 dark:hover:text-orange-500 transition-colors duration-200 cursor-pointer active:scale-95 transition-transform"><span class="material-symbols-outlined">shopping_bag</span></button>
+</div>
+</div>
+</nav>
+<!-- Main Product Area -->
+<main class="max-w-[1440px] mx-auto px-margin-edge mt-20 mb-section-gap grid grid-cols-12 gap-gutter">
+<!-- Image Gallery (Left, 8 cols) -->
+<div class="col-span-12 md:col-span-8 flex flex-col gap-unit">
+<div class="aspect-[3/4] w-full bg-surface-container-high relative overflow-hidden">
+<img alt="Fashion model wearing EGHT structural black jacket in studio" class="object-cover w-full h-full" data-alt="High fashion editorial shot of a model wearing an oversized structural black jacket against a plain grey background, dramatic studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsru1WzBDiq7PV761LHmVNK_wgkE5cLXedxNwMg8u-rB3Aw0FjI5dzJXVcE4bOZBDZ8zZ3-JU04S_kYqIg4kBROzLEFe_QC5Al3Pdv3DSn3GkkO6Px-LdpHZ-vXwf9LcTgU83ywvJQO5x7lWvXEv5R-npuLkr5PKd7w2B6RIegWriBJJVwumKccvLxKQglQQDyIfFCy-U0jVp0MQjdc44Ikkoot5h10Ci47f7KiG7PRUPV44zbUCRjhlAwiQMfbgNphgdKWR6qiYo"/>
+</div>
+<div class="aspect-[3/4] w-full bg-surface-container-high relative overflow-hidden">
+<img alt="Detail shot of EGHT jacket fabric and stitching" class="object-cover w-full h-full" data-alt="Close up macro detail shot of premium black textured fabric showing complex stitching and minimal matte hardware" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjJb72tiawmAbqC28E6NCMaXM_w_X4A3crDoq_yqpmiYitsI9dwSyti2cLUiKwno_ngvc1OuHJmXjsjTVeevR7vME9SswNRcr2HyfZAbAHNDFQ0S2jizwlwjQ6ITbKB_LBhW6gr4Gn-OMkkwvd87HTuwbMysuDawnFsKpyAJx_UxbWMdwGEikG1tbXazog6p37o8gcBMCbSBcIIXSUPs38EDRmhvXPl20dLApRYtoYdVBLp9teF9ggttR8sikMfxiYO39W7dLtYc4"/>
+</div>
+<div class="aspect-[3/4] w-full bg-surface-container-high relative overflow-hidden">
+<img alt="Full length shot of EGHT jacket from the back" class="object-cover w-full h-full" data-alt="Full length editorial shot of model from the back, highlighting the architectural silhouette and drop shoulder of a black streetwear jacket" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBND0cNTjdbvRP7CekDsNqhAqOkVxx1qy46nheNkDIh3r7Z835xb-Soipll5klxqK1NXfMLkg8lttdtioQ3FAn8buVd30_VbRDKyBPtulXGy5zRtZAlWnyAW2d9EPYmfWK973QTcQpohYbZj9FA7W0SWYrYFAMSBZ9zwmydyxI9RbAPRcDaoj0-zA-B_iO67yp_MTwIMmH2ttEu_uKgl5K8bmqIWsSwNjFFe9584SaLVHQY_4TKjs87Sdj0rXWhMv6tDMi0ouOpTg"/>
+</div>
+</div>
+<!-- Product Info (Right, 4 cols, Sticky) -->
+<div class="col-span-12 md:col-span-4 relative">
+<div class="sticky top-32 flex flex-col gap-8">
+<!-- Header -->
+<div>
+<h1 class="font-headline-lg text-headline-lg text-primary uppercase">STRUCTURAL BOMBER V2</h1>
+<p class="font-body-lg text-body-lg text-secondary mt-2">$450.00 USD</p>
+</div>
+<!-- Description -->
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    An architectural approach to the classic bomber silhouette. Constructed from heavyweight water-repellent nylon with exaggerated dropped shoulders and minimal matte hardware. Designed for a cropped, boxy fit.
+                </p>
+<hr class="border-t border-outline-variant"/>
+<!-- Color Selection -->
+<div class="flex flex-col gap-4">
+<span class="font-label-caps text-label-caps text-primary uppercase">COLOR: ONYX BLACK</span>
+<div class="flex gap-2">
+<button aria-label="Onyx Black" class="w-8 h-8 bg-black rounded-full border-2 border-primary focus:outline-none"></button>
+<button aria-label="Bone White" class="w-8 h-8 bg-surface-container-high rounded-full border border-outline-variant focus:outline-none hover:border-primary transition-colors"></button>
+</div>
+</div>
+<!-- Size Selection -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="font-label-caps text-label-caps text-primary uppercase">SIZE</span>
+<button class="font-label-caps text-label-caps text-secondary underline hover:text-primary transition-colors">SIZE GUIDE</button>
+</div>
+<div class="grid grid-cols-4 gap-2">
+<button class="py-3 border border-outline-variant font-label-caps text-label-caps hover:border-primary transition-colors text-center">S</button>
+<button class="py-3 border border-primary bg-primary text-on-primary font-label-caps text-label-caps text-center">M</button>
+<button class="py-3 border border-outline-variant font-label-caps text-label-caps hover:border-primary transition-colors text-center">L</button>
+<button class="py-3 border border-outline-variant font-label-caps text-label-caps hover:border-primary transition-colors text-center text-secondary-fixed-dim cursor-not-allowed">XL</button>
+</div>
+</div>
+<!-- CTA -->
+<button class="w-full bg-primary text-on-primary py-4 px-8 font-label-caps text-label-caps uppercase hover:bg-surface-tint transition-colors mt-4">
+                    ADD TO BAG
+                </button>
+<!-- Accordions -->
+<div class="flex flex-col border-t border-outline-variant mt-8">
+<details class="group border-b border-outline-variant py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-caps text-label-caps text-primary uppercase list-none">
+                            FABRIC &amp; CARE
+                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-4 font-body-md text-body-md text-on-surface-variant">
+                            100% Heavyweight Nylon shell. Cupro lining. Dry clean only. Do not tumble dry.
+                        </div>
+</details>
+<details class="group border-b border-outline-variant py-4 cursor-pointer">
+<summary class="flex justify-between items-center font-label-caps text-label-caps text-primary uppercase list-none">
+                            SHIPPING &amp; RETURNS
+                            <span class="material-symbols-outlined group-open:rotate-180 transition-transform">expand_more</span>
+</summary>
+<div class="pt-4 font-body-md text-body-md text-on-surface-variant">
+                            Complimentary global shipping on all orders over $200. Returns accepted within 14 days of delivery in original condition.
+                        </div>
+</details>
+</div>
+</div>
+</div>
+</main>
+<!-- Complete The Look -->
+<section class="max-w-[1440px] mx-auto px-margin-edge mb-section-gap">
+<h2 class="font-headline-md text-headline-md text-primary uppercase mb-12 text-center">COMPLETE THE LOOK</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[4/5] bg-surface-container-high overflow-hidden">
+<img alt="Wide leg trousers" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="Minimalist high end wide leg black trousers on model against plain background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRtbddcCbwDzfCKTR_QtgHnl9KXDwocWc6oTRROS1R3sgBb7pDqy4eifzrEUggtd2p37VJOkiSg6tZ3YTt_EV7EojY7HNkfnKFilKIj6xt7NQxMC04p2ZIpsDl2PZ3SvqrM6Q2mzEuz65aMORpSFO7YvjrEXujfWEQqyglWwjLkstkOgSTFUihxpRIVf6S_AOS2VTkbh8vN_sPuSts2cLx1dLfaOMpaB0uflPrho7hfFMfj1mnX7O95830ZHZPDjoEutqtDebrIto"/>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">WIDE LEG TROUSER</h3>
+<p class="font-body-md text-body-md text-secondary mt-1">$280.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[4/5] bg-surface-container-high overflow-hidden">
+<img alt="Heavyweight blank tee" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="Premium heavyweight blank white t-shirt flat lay on light grey background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0LXAWKKEJq3_7vei6hnuheQjU5LDQRDeIdohOqN4k6vrgHVzRYC7ADaj9SV2j9JoBKnhtuR8MWGJJ8pBZ-kJrOJhIkQ8ES6wBskf7mQtK___KQEqh9d8wVsdNbqFqhOUHFrQTreSA3cL2i7ktv3JWhrBKO5gn_8QMwzQox4MuCxSNanU9B_jcQkiRgJigBdnyGK732jr4qn9FK6ZIpvlvFInFEyULekVWqv4rlbA5L34BQyeBc05OZfH_YETfl42Hv1oJFFd5kOs"/>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">HEAVYWEIGHT TEE</h3>
+<p class="font-body-md text-body-md text-secondary mt-1">$95.00</p>
+</div>
+</div>
+<div class="flex flex-col gap-4 group cursor-pointer">
+<div class="aspect-[4/5] bg-surface-container-high overflow-hidden">
+<img alt="Chunky sole sneakers" class="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500" data-alt="Brutalist chunky sole black sneakers product shot against concrete background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA3B948Br7BAuLEQa6DIJfRQ8vZFLOrrI1kXTenpv6V6PzLTLN5ZZY2fEjMTxu9d0tadSjpEJthjZo_6hXX_0TUbb13HWsoHB6OkBW1DMok3xia_f7PoIBLRg-_iLxmZYrX4h0ljtSBmR0tw0mhXaiOO1kdVnVm2NZ-9qTKlb_F1uEPpem1AMK06GFlQJSlh2UrSmdCJiDh2d53SD6EZZRJxD0dlGigNw_jFeaOWyr1x0Zi6NKKk_7oG09yQ1lJJtfPiz33h45oXzE"/>
+</div>
+<div>
+<h3 class="font-label-caps text-label-caps text-primary uppercase">BRUTALIST SNEAKER</h3>
+<p class="font-body-md text-body-md text-secondary mt-1">$550.00</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-[#F5F5F5] dark:bg-zinc-900 w-full border-t border-zinc-200 dark:border-zinc-800 flex flex-col md:flex-row justify-between items-center px-10 py-20 mt-40">
+<div class="text-xl font-black tracking-tighter text-zinc-900 dark:text-zinc-50 mb-8 md:mb-0">
+            EGHT
+        </div>
+<div class="flex gap-6 font-['Inter'] uppercase tracking-widest text-[10px]">
+<a class="text-zinc-500 dark:text-zinc-400 opacity-100 hover:opacity-80 transition-opacity hover:text-zinc-900 dark:hover:text-zinc-50 underline transition-all" href="#">PRIVACY</a>
+<a class="text-zinc-500 dark:text-zinc-400 opacity-100 hover:opacity-80 transition-opacity hover:text-zinc-900 dark:hover:text-zinc-50 underline transition-all" href="#">TERMS</a>
+<a class="text-zinc-500 dark:text-zinc-400 opacity-100 hover:opacity-80 transition-opacity hover:text-zinc-900 dark:hover:text-zinc-50 underline transition-all" href="#">SHIPPING</a>
+<a class="text-zinc-500 dark:text-zinc-400 opacity-100 hover:opacity-80 transition-opacity hover:text-zinc-900 dark:hover:text-zinc-50 underline transition-all" href="#">STORES</a>
+<a class="text-zinc-500 dark:text-zinc-400 opacity-100 hover:opacity-80 transition-opacity hover:text-zinc-900 dark:hover:text-zinc-50 underline transition-all" href="#">INSTAGRAM</a>
+</div>
+<div class="font-['Inter'] uppercase tracking-widest text-[10px] text-zinc-500 dark:text-zinc-400 mt-8 md:mt-0">
+            © 2024 EGHT STUDIOS. ALL RIGHTS RESERVED.
+        </div>
+</footer>
+</body></html>
