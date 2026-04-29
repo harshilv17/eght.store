@@ -28,8 +28,8 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[var(--color-background)] text-[var(--color-on-surface)] antialiased">
+    <html lang="en" className={`${inter.variable} h-full`} suppressHydrationWarning>
+      <body className="min-h-full flex flex-col bg-[var(--color-background)] text-[var(--color-on-surface)] antialiased" suppressHydrationWarning>
         <a href="#main-content" className="skip-to-content">
           Skip to content
         </a>
