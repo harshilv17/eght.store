@@ -23,7 +23,10 @@ async function getCategories(): Promise<Category[]> {
 
 async function getProducts(categorySlug: string, search?: string): Promise<Product[]> {
   try {
-    const qs = new URLSearchParams({ category: categorySlug, limit: String(PAGE_SIZE) });
+    const qs = new URLSearchParams({ limit: String(PAGE_SIZE) });
+    if (categorySlug !== 'new-arrivals') {
+      qs.set("category", categorySlug);
+    }
     if (search) qs.set("search", search);
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/products?${qs}`, {
       next: { revalidate: 60 },
@@ -43,6 +46,13 @@ type Props = {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
+  if (slug === 'new-arrivals') {
+    return {
+      title: "NEW ARRIVALS — EGHT",
+      description: "Shop the latest drops at EGHT Studios.",
+    };
+  }
+
   const categories = await getCategories();
   const category = categories.find((c) => c.slug === slug);
   const name = category?.name ?? slug.replace(/-/g, " ").toUpperCase();
@@ -63,13 +73,13 @@ export default async function CollectionPage({ params, searchParams }: Props) {
 
   const currentCategory = categories.find((c) => c.slug === slug);
 
-  // If we get zero products AND no categories match, treat as 404
-  if (!currentCategory && products.length === 0) {
+  // If we get zero products AND no categories match, treat as 404 (unless it's new-arrivals)
+  if (!currentCategory && products.length === 0 && slug !== 'new-arrivals') {
     notFound();
   }
 
-  const name = currentCategory?.name ?? slug.replace(/-/g, " ").toUpperCase();
-  const description = currentCategory?.description;
+  const name = slug === 'new-arrivals' ? 'NEW ARRIVALS' : (currentCategory?.name ?? slug.replace(/-/g, " ").toUpperCase());
+  const description = slug === 'new-arrivals' ? 'Fresh drops and latest additions to the EGHT catalog.' : currentCategory?.description;
 
   return (
     <div className="max-w-[1440px] mx-auto px-[var(--spacing-margin-edge)] py-[var(--spacing-section-gap)]">
