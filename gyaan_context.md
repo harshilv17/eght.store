@@ -235,6 +235,14 @@ frontend/
   - Build: ✅ clean (TypeScript + Next.js 16.2.4), all 10 routes generated
 - **Next:** Phase 6 — Checkout + Razorpay (checkout page, lib/razorpay.ts, RazorpayLauncher, confirmation page)
 
+### Session 6 — 2026-04-29
+- **Site Audit & Bug Fixes:**
+  - Audited site using a browser subagent and found several dead clicks, 404s, and broken images.
+  - Fixed 404 for `/collections/new-arrivals` by explicitly routing it to load the newest 24 products without a category filter in `app/(shop)/collections/[slug]/page.tsx`.
+  - Created placeholder static pages for `/editorial`, `/about`, `/privacy`, `/terms`, `/shipping`, and `/stores` using consistent prose-invert styling.
+  - Fixed a silent failure of `next/image` on the homepage by directly updating the `wide-leg-trouser` database record with a valid Unsplash image URL.
+  - Solved a Next.js hydration mismatch error on the `<body>` tag caused by browser extensions injecting `__processed_xxx` attributes. Added `suppressHydrationWarning` to `<html>` and `<body>` in `layout.tsx`.
+
 ## Next.js Version Note
 Running **Next.js 16.2.4** (not 15). Key differences:
 - `middleware.ts` renamed to `proxy.ts`, export named `proxy` (not `middleware`)
