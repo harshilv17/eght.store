@@ -1,6 +1,8 @@
 import { MetadataRoute } from "next";
 import { Product, Category } from "@/types/product";
 
+export const dynamic = "force-dynamic";
+
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eght.studio";
 
 async function getCategories(): Promise<Category[]> {
