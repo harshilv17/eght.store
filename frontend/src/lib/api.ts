@@ -1,5 +1,5 @@
 import { ApiError } from "@/types/api";
-import { CartApiResponse, RawCartItem } from "@/types/cart";
+import { CartApiResponse, CartTotals, RawCartItem } from "@/types/cart";
 import { BackendUser, Address } from "@/types/user";
 import { Order, OrderSummary } from "@/types/order";
 import { env } from "./env";
@@ -138,6 +138,13 @@ export const cartApi = {
     }),
   remove: (variantId: string) =>
     apiFetch<RawCartItem[]>(`/cart/items/${variantId}`, { method: "DELETE" }),
+  totals: (params?: { country?: string; pincode?: string }) => {
+    const qs = new URLSearchParams();
+    if (params?.country) qs.set("country", params.country);
+    if (params?.pincode) qs.set("pincode", params.pincode);
+    const suffix = qs.toString() ? `?${qs}` : "";
+    return apiFetch<CartTotals>(`/cart/totals${suffix}`);
+  },
 };
 
 export const paymentApi = {

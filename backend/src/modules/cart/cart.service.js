@@ -1,6 +1,7 @@
 import { AppError } from '../../middlewares/error.middleware.js';
 import { query } from '../../config/db.js';
 import * as CartModel from './cart.model.js';
+import { computeTotals } from '../../utils/pricing.js';
 
 export async function getCart(userId, sessionId) {
   if (userId && sessionId) {
@@ -11,6 +12,13 @@ export async function getCart(userId, sessionId) {
 
   const subtotal = items.reduce((sum, i) => sum + parseFloat(i.price) * i.quantity, 0);
   return { cartId, items, subtotal: subtotal.toFixed(2), itemCount: items.length };
+}
+
+export async function getCartTotals(userId, sessionId, country) {
+  const cartId = await CartModel.findOrCreateCart(userId, sessionId);
+  const items = await CartModel.getCartWithItems(cartId);
+  const subtotalInr = items.reduce((sum, i) => sum + parseFloat(i.price) * i.quantity, 0);
+  return computeTotals({ subtotalInr, country });
 }
 
 export async function addItem(userId, sessionId, variantId, quantity = 1) {

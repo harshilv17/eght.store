@@ -8,10 +8,11 @@ import { useUiStore } from "@/store/ui.store";
 import { paymentApi } from "@/lib/api";
 import { ContactSection } from "@/components/checkout/ContactSection";
 import { ShippingAddressForm, ShippingAddress, ShippingAddressErrors } from "@/components/checkout/ShippingAddressForm";
-import { ShippingMethodSelect, ShippingMethod } from "@/components/checkout/ShippingMethodSelect";
 import { OrderSummary } from "@/components/checkout/OrderSummary";
 import { Button } from "@/components/ui/Button";
 import { RazorpayResponse } from "@/lib/razorpay";
+import { CartTotals } from "@/types/cart";
+import { formatPrice, type CountryCode } from "@/lib/country";
 
 const RazorpayLauncher = lazy(() =>
   import("@/components/checkout/RazorpayLauncher").then((m) => ({
@@ -25,12 +26,8 @@ interface CreateOrderResult {
   amount: number;
   currency: string;
   keyId: string;
+  breakdown?: CartTotals;
 }
-
-const SHIPPING_PRICES: Record<ShippingMethod, number> = {
-  standard: 0,
-  express: 250,
-};
 
 const EMPTY_ADDRESS: ShippingAddress = {
   fullName: "",
@@ -52,13 +49,16 @@ function validateAddress(addr: ShippingAddress): ShippingAddressErrors {
   if (!addr.city.trim()) errors.city = "Required";
   if (!addr.state.trim()) errors.state = "Required";
   if (!addr.pincode.trim()) errors.pincode = "Required";
-  else if (!/^\d{6}$/.test(addr.pincode.trim())) errors.pincode = "Enter a 6-digit pincode";
+  else if (addr.country === "IN" && !/^\d{6}$/.test(addr.pincode.trim()))
+    errors.pincode = "Enter a 6-digit pincode";
+  else if (addr.country !== "IN" && addr.pincode.trim().length < 3)
+    errors.pincode = "Enter a valid postal code";
   return errors;
 }
 
 export default function CheckoutPage() {
   const router = useRouter();
-  const { items, subtotal, clear } = useCartStore();
+  const { items, clear } = useCartStore();
   const { user, isBootstrapping } = useAuthStore();
   const addToast = useUiStore((s) => s.addToast);
 
@@ -66,7 +66,7 @@ export default function CheckoutPage() {
   const [emailError, setEmailError] = useState<string>();
   const [address, setAddress] = useState<ShippingAddress>(EMPTY_ADDRESS);
   const [addressErrors, setAddressErrors] = useState<ShippingAddressErrors>({});
-  const [shippingMethod, setShippingMethod] = useState<ShippingMethod>("standard");
+  const [totals, setTotals] = useState<CartTotals | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [pendingOrder, setPendingOrder] = useState<(CreateOrderResult & { orderId: string }) | null>(null);
 
@@ -157,8 +157,6 @@ export default function CheckoutPage() {
     );
   }
 
-  const shippingPrice = SHIPPING_PRICES[shippingMethod];
-
   return (
     <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-10">
       <h1 className="sr-only">Checkout</h1>
@@ -178,8 +176,6 @@ export default function CheckoutPage() {
             errors={addressErrors}
           />
 
-          <ShippingMethodSelect value={shippingMethod} onChange={setShippingMethod} />
-
           <section>
             <h2 className="text-headline-md font-bold tracking-tight mb-4">Payment</h2>
             <p className="text-body-md text-[var(--color-on-surface-variant)] mb-6">
@@ -189,9 +185,11 @@ export default function CheckoutPage() {
               fullWidth
               loading={isSubmitting}
               onClick={handlePayClick}
-              disabled={items.length === 0}
+              disabled={items.length === 0 || !totals}
             >
-              Pay now — {new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", minimumFractionDigits: 0 }).format(subtotal + shippingPrice)}
+              {totals
+                ? `Pay now — ${formatPrice(totals.total, (address.country as CountryCode) || "IN")}`
+                : "Calculating…"}
             </Button>
           </section>
         </div>
@@ -201,8 +199,9 @@ export default function CheckoutPage() {
           <h2 className="text-label-caps font-bold uppercase tracking-widest mb-6">Order summary</h2>
           <OrderSummary
             items={items}
-            subtotal={subtotal}
-            shippingPrice={shippingPrice}
+            country={address.country || "IN"}
+            pincode={address.pincode || undefined}
+            onTotalsChange={setTotals}
           />
         </aside>
       </div>

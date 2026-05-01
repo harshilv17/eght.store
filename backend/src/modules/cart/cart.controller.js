@@ -1,5 +1,6 @@
 import * as CartService from './cart.service.js';
 import { sendSuccess } from '../../utils/helpers.js';
+import { resolveCountry } from '../../utils/pricing.js';
 
 function getIdentifiers(req) {
   return {
@@ -39,5 +40,14 @@ export async function removeItem(req, res, next) {
     const { userId, sessionId } = getIdentifiers(req);
     const items = await CartService.removeItem(userId, sessionId, req.params.variantId);
     sendSuccess(res, items);
+  } catch (err) { next(err); }
+}
+
+export async function getTotals(req, res, next) {
+  try {
+    const { userId, sessionId } = getIdentifiers(req);
+    const country = resolveCountry(req);
+    const totals = await CartService.getCartTotals(userId, sessionId, country);
+    sendSuccess(res, { country, ...totals });
   } catch (err) { next(err); }
 }

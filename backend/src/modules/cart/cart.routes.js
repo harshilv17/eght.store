@@ -16,6 +16,7 @@ const updateItemSchema = z.object({
 });
 
 router.get('/', CartController.getCart);
+router.get('/totals', CartController.getTotals);
 router.post('/items', validate(addItemSchema), CartController.addItem);
 router.put('/items', validate(updateItemSchema), CartController.updateItem);
 router.delete('/items/:variantId', CartController.removeItem);

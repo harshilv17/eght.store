@@ -7,12 +7,13 @@ const router = Router();
 
 const addressSchema = z.object({
   fullName: z.string().min(1),
-  phone: z.string().min(10).max(15),
+  phone: z.string().min(7).max(20),
   line1: z.string().min(1),
   line2: z.string().optional(),
   city: z.string().min(1),
   state: z.string().min(1),
-  pincode: z.string().regex(/^\d{6}$/, 'Invalid pincode'),
+  pincode: z.string().min(3).max(12),
+  country: z.string().length(2).optional(),
 });
 
 const createOrderSchema = z.object({

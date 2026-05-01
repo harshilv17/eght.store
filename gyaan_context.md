@@ -149,6 +149,10 @@ frontend/
 | 2026-04-28 | JWT with httpOnly refresh cookie | Security best practice |
 | 2026-04-28 | Next.js App Router | SSR for SEO on product/collection pages |
 | 2026-04-28 | Feature-based backend modules | Scalability, separation of concerns |
+| 2026-05-01 | Cloudinary for image hosting | Free tier, on-the-fly transformations, simpler than S3 IAM. Backend will upload via signed URL + `CLOUDINARY_*` env vars when upload UI is built. `next.config.ts` already whitelists `res.cloudinary.com`. |
+| 2026-05-01 | Multi-currency canonical = INR + FX table | Backend stores INR; product list/detail and `/cart/totals` return `currency` + converted display amounts via fixed-rate `COUNTRIES` table in `backend/src/utils/pricing.js`. Razorpay always charges INR (paise). |
+| 2026-05-01 | Country detection via cookie + IP geo | `proxy.ts` seeds `country` cookie from `x-vercel-ip-country` / `cf-ipcountry`; user override stored back to cookie; backend `resolveCountry(req)` reads query → cookie → header → default IN. |
+| 2026-05-01 | `force-dynamic` retained on shop pages | Justified: product prices now vary per-request by country cookie/IP. Static prerender would cache INR-only HTML for all visitors. Build-time timeout that originally prompted the flag is also addressed since dynamic pages skip prerender entirely. |
 
 ---
 

@@ -1,13 +1,15 @@
 import * as PaymentService from './payment.service.js';
 import { sendSuccess } from '../../utils/helpers.js';
+import { resolveCountry } from '../../utils/pricing.js';
 
 export async function createOrder(req, res, next) {
   try {
     const userId = req.user?.sub || null;
     const sessionId = req.headers['x-session-id'] || null;
     const { shippingAddress } = req.body;
+    const country = resolveCountry(req);
 
-    const result = await PaymentService.createPaymentOrder({ userId, sessionId, shippingAddress });
+    const result = await PaymentService.createPaymentOrder({ userId, sessionId, shippingAddress, country });
     sendSuccess(res, result, 201);
   } catch (err) { next(err); }
 }

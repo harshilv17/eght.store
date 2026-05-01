@@ -19,3 +19,17 @@ export interface CartApiResponse {
   subtotal: string;
   itemCount: number;
 }
+
+export interface CartTotals {
+  country: string;
+  currency: string;
+  taxLabel: string;
+  subtotal: number;
+  shipping: number;
+  tax: number;
+  total: number;
+  subtotalInr: number;
+  shippingInr: number;
+  taxInr: number;
+  totalInr: number;
+}

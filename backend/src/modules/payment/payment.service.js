@@ -4,20 +4,22 @@ import { env } from '../../config/env.js';
 import { AppError } from '../../middlewares/error.middleware.js';
 import * as CartModel from '../cart/cart.model.js';
 import * as OrderModel from '../order/order.model.js';
+import { computeTotals } from '../../utils/pricing.js';
 
 const razorpay = new Razorpay({
   key_id: env.razorpay.keyId,
   key_secret: env.razorpay.keySecret,
 });
 
-export async function createPaymentOrder({ userId, sessionId, shippingAddress }) {
+export async function createPaymentOrder({ userId, sessionId, shippingAddress, country }) {
   const cartId = await CartModel.findOrCreateCart(userId, sessionId);
   const items = await CartModel.getCartWithItems(cartId);
 
   if (items.length === 0) throw new AppError('Cart is empty', 400);
 
-  const totalAmount = items.reduce((sum, i) => sum + parseFloat(i.price) * i.quantity, 0);
-  const amountInPaise = Math.round(totalAmount * 100);
+  const subtotalInr = items.reduce((sum, i) => sum + parseFloat(i.price) * i.quantity, 0);
+  const totals = computeTotals({ subtotalInr, country: country || shippingAddress?.country || 'IN' });
+  const amountInPaise = Math.round(totals.totalInr * 100);
 
   const rzpOrder = await razorpay.orders.create({
     amount: amountInPaise,
@@ -36,7 +38,7 @@ export async function createPaymentOrder({ userId, sessionId, shippingAddress })
 
   const order = await OrderModel.createOrder({
     userId,
-    totalAmount,
+    totalAmount: totals.totalInr,
     shippingAddress,
     items: orderItems,
   });
@@ -55,6 +57,14 @@ export async function createPaymentOrder({ userId, sessionId, shippingAddress })
     amount: amountInPaise,
     currency: 'INR',
     keyId: env.razorpay.keyId,
+    breakdown: {
+      currency: totals.currency,
+      taxLabel: totals.taxLabel,
+      subtotal: totals.subtotal,
+      shipping: totals.shipping,
+      tax: totals.tax,
+      total: totals.total,
+    },
   };
 }
 
