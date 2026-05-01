@@ -41,6 +41,15 @@ export async function createPaymentOrder({ userId, sessionId, shippingAddress, c
     totalAmount: totals.totalInr,
     shippingAddress,
     items: orderItems,
+    country: country || shippingAddress?.country || 'IN',
+    displayCurrency: totals.currency,
+    displayTotal: totals.total,
+    displayBreakdown: {
+      subtotal: totals.subtotal,
+      shipping: totals.shipping,
+      tax: totals.tax,
+      taxLabel: totals.taxLabel,
+    },
   });
 
   await OrderModel.updateOrderPayment(order.id, {

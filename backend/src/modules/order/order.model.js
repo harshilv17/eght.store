@@ -1,14 +1,22 @@
 import { query, getClient } from '../../config/db.js';
 
-export async function createOrder({ userId, totalAmount, shippingAddress, items }) {
+export async function createOrder({ userId, totalAmount, shippingAddress, items, country, displayCurrency, displayTotal, displayBreakdown }) {
   const client = await getClient();
   try {
     await client.query('BEGIN');
 
     const { rows } = await client.query(
-      `INSERT INTO orders (user_id, total_amount, shipping_address)
-       VALUES ($1, $2, $3) RETURNING *`,
-      [userId, totalAmount, JSON.stringify(shippingAddress)]
+      `INSERT INTO orders (user_id, total_amount, shipping_address, country_code, display_currency, display_total, display_breakdown)
+       VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *`,
+      [
+        userId,
+        totalAmount,
+        JSON.stringify(shippingAddress),
+        country || 'IN',
+        displayCurrency || 'INR',
+        displayTotal ?? totalAmount,
+        displayBreakdown ? JSON.stringify(displayBreakdown) : null,
+      ]
     );
     const order = rows[0];
 
@@ -62,6 +70,7 @@ export async function getOrderById(orderId, userId) {
 export async function getUserOrders(userId) {
   const { rows } = await query(
     `SELECT o.id, o.status, o.total_amount, o.created_at,
+            o.country_code, o.display_currency, o.display_total,
             COUNT(oi.id) AS item_count
      FROM orders o LEFT JOIN order_items oi ON oi.order_id = o.id
      WHERE o.user_id = $1

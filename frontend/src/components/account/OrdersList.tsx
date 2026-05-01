@@ -63,7 +63,9 @@ export function OrdersList({ orders }: OrdersListProps) {
               {order.status}
             </span>
             <p className="text-body-md font-bold text-[var(--color-on-surface)]">
-              {formatCurrency(parseFloat(order.total_amount))}
+              {order.display_total != null
+                ? formatCurrency(parseFloat(String(order.display_total)), order.display_currency || "INR")
+                : formatCurrency(parseFloat(order.total_amount), "INR")}
             </p>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[var(--color-on-surface-variant)]">
               <polyline points="9 18 15 12 9 6" />

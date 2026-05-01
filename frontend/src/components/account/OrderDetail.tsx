@@ -8,8 +8,18 @@ interface OrderDetailProps {
   order: Order;
 }
 
+function snapshotFx(order: Order): { currency: string; rate: number } {
+  const inrTotal = parseFloat(order.total_amount);
+  const dispTotal = order.display_total != null ? parseFloat(String(order.display_total)) : inrTotal;
+  const rate = inrTotal > 0 ? dispTotal / inrTotal : 1;
+  return { currency: order.display_currency || "INR", rate };
+}
+
 export function OrderDetail({ order }: OrderDetailProps) {
   const addr = order.shipping_address;
+  const { currency, rate } = snapshotFx(order);
+  const fmt = (inr: number) =>
+    formatCurrency(Math.round(inr * rate * 100) / 100, currency);
 
   return (
     <div className="flex flex-col gap-8">
@@ -48,21 +58,47 @@ export function OrderDetail({ order }: OrderDetailProps) {
                 </p>
               </div>
               <p className="text-body-md font-bold text-[var(--color-on-surface)] shrink-0">
-                {formatCurrency(parseFloat(item.unit_price) * item.quantity)}
+                {fmt(parseFloat(item.unit_price) * item.quantity)}
               </p>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Total */}
-      <div className="flex items-center justify-between border-t border-[var(--color-outline-variant)] pt-4">
-        <span className="text-label-caps font-bold uppercase tracking-widest text-[var(--color-on-surface-variant)]">
-          Total
-        </span>
-        <span className="text-body-lg font-bold text-[var(--color-on-surface)]">
-          {formatCurrency(parseFloat(order.total_amount))}
-        </span>
+      {/* Totals */}
+      <div className="flex flex-col gap-2 border-t border-[var(--color-outline-variant)] pt-4">
+        {order.display_breakdown && (
+          <>
+            <Row label="Subtotal" value={formatCurrency(order.display_breakdown.subtotal, currency)} />
+            <Row
+              label="Shipping"
+              value={
+                order.display_breakdown.shipping === 0
+                  ? "FREE"
+                  : formatCurrency(order.display_breakdown.shipping, currency)
+              }
+            />
+            <Row
+              label={order.display_breakdown.taxLabel || "Tax"}
+              value={formatCurrency(order.display_breakdown.tax, currency)}
+            />
+          </>
+        )}
+        <div className="flex items-center justify-between mt-2">
+          <span className="text-label-caps font-bold uppercase tracking-widest text-[var(--color-on-surface-variant)]">
+            Total
+          </span>
+          <span className="text-body-lg font-bold text-[var(--color-on-surface)]">
+            {order.display_total != null
+              ? formatCurrency(parseFloat(String(order.display_total)), currency)
+              : formatCurrency(parseFloat(order.total_amount), "INR")}
+          </span>
+        </div>
+        {currency !== "INR" && (
+          <p className="text-body-md text-[var(--color-on-surface-variant)] text-right">
+            Charged ₹{parseFloat(order.total_amount).toFixed(2)} INR
+          </p>
+        )}
       </div>
 
       {/* Shipping address */}
@@ -86,6 +122,15 @@ export function OrderDetail({ order }: OrderDetailProps) {
       >
         Back to Orders
       </Link>
+    </div>
+  );
+}
+
+function Row({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-center justify-between text-body-md">
+      <span className="text-[var(--color-on-surface-variant)]">{label}</span>
+      <span>{value}</span>
     </div>
   );
 }
