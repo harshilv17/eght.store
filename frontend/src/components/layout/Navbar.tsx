@@ -59,16 +59,6 @@ export function Navbar() {
 
           {/* Right — icons */}
           <div className="flex items-center gap-6 ml-auto">
-            <button
-              className="text-[var(--color-on-surface)] hover:text-[var(--color-accent)] transition-colors"
-              aria-label="Search"
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true">
-                <circle cx="11" cy="11" r="7" />
-                <line x1="16.5" y1="16.5" x2="22" y2="22" />
-              </svg>
-            </button>
-
             <Link
               href="/account/login"
               className="text-[var(--color-on-surface)] hover:text-[var(--color-accent)] transition-colors hidden md:block"

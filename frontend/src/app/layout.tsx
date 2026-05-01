@@ -10,7 +10,10 @@ const inter = Inter({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://eght.studio";
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "EGHT Studios — Premium Streetwear",
     template: "%s — EGHT",
@@ -21,6 +24,15 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_IN",
     siteName: "EGHT Studios",
+    url: SITE_URL,
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@eghtstudios",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

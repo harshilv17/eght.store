@@ -1,7 +1,17 @@
 "use client";
 
-import { useEffect, useRef, useState, ReactNode } from "react";
+import { useEffect, useRef, useSyncExternalStore, ReactNode } from "react";
 import { createPortal } from "react-dom";
+
+function subscribe() {
+  return () => {};
+}
+function getSnapshot() {
+  return true;
+}
+function getServerSnapshot() {
+  return false;
+}
 
 const FOCUSABLE_SELECTORS = [
   'a[href]',
@@ -21,11 +31,9 @@ interface DrawerProps {
 }
 
 export function Drawer({ open, onClose, label, side = 'right', children }: DrawerProps) {
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const panelRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<Element | null>(null);
-
-  useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
     if (open) {
@@ -76,12 +84,12 @@ export function Drawer({ open, onClose, label, side = 'right', children }: Drawe
       <div
         aria-hidden="true"
         onClick={onClose}
-        className={`absolute inset-0 bg-black/40 transition-opacity duration-300 ${open ? 'opacity-100' : 'opacity-0'}`}
+        className={`absolute inset-0 bg-black/40 transition-opacity duration-300 motion-reduce:transition-none ${open ? 'opacity-100' : 'opacity-0'}`}
       />
       {/* Panel */}
       <div
         ref={panelRef}
-        className={`absolute top-0 ${side === 'right' ? 'right-0' : 'left-0'} h-full w-full max-w-[480px] bg-[var(--color-surface-container-lowest)] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out ${open ? 'translate-x-0' : slideOut}`}
+        className={`absolute top-0 ${side === 'right' ? 'right-0' : 'left-0'} h-full w-full max-w-[480px] bg-[var(--color-surface-container-lowest)] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out motion-reduce:transition-none ${open ? 'translate-x-0' : slideOut}`}
       >
         {children}
       </div>

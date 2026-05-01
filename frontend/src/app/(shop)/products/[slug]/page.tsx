@@ -7,6 +7,7 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductDetailClient } from "./ProductDetailClient";
 import { CompleteTheLook } from "@/components/product/CompleteTheLook";
 import { ProductJsonLd } from "@/components/seo/ProductJsonLd";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 async function getProduct(slug: string): Promise<ProductDetail | null> {
   try {
@@ -69,6 +70,14 @@ export default async function ProductPage({ params }: Props) {
   return (
     <>
       <ProductJsonLd product={product} />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Collections", url: "/collections" },
+          { name: product.category_name ?? "Shop", url: `/collections/${product.category_slug}` },
+          { name: product.name, url: `/products/${product.slug}` },
+        ]}
+      />
       <main className="max-w-[1440px] mx-auto px-[var(--spacing-margin-edge)] mt-20 mb-[var(--spacing-section-gap)]">
         <div className="grid grid-cols-12 gap-[var(--spacing-gutter)]">
           {/* Gallery — 8 cols */}

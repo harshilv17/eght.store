@@ -5,6 +5,8 @@ import { Product, Category } from "@/types/product";
 export const dynamic = "force-dynamic";
 import { FilterSidebar } from "@/components/collection/FilterSidebar";
 import { CollectionGrid } from "@/components/collection/CollectionGrid";
+import { CollectionJsonLd } from "@/components/seo/CollectionJsonLd";
+import { BreadcrumbJsonLd } from "@/components/seo/BreadcrumbJsonLd";
 
 const PAGE_SIZE = 24;
 
@@ -83,6 +85,19 @@ export default async function CollectionPage({ params, searchParams }: Props) {
 
   return (
     <div className="max-w-[1440px] mx-auto px-[var(--spacing-margin-edge)] py-[var(--spacing-section-gap)]">
+      <CollectionJsonLd
+        name={name}
+        description={description}
+        slug={slug}
+        products={products}
+      />
+      <BreadcrumbJsonLd
+        items={[
+          { name: "Home", url: "/" },
+          { name: "Collections", url: "/collections" },
+          { name, url: `/collections/${slug}` },
+        ]}
+      />
       {/* Collection header */}
       <header className="mb-[var(--spacing-section-gap)] flex flex-col items-center text-center">
         <h1

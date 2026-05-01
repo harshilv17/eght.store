@@ -16,9 +16,9 @@ export function OrderDetail({ order }: OrderDetailProps) {
       {/* Header */}
       <div className="flex items-start justify-between gap-4">
         <div>
-          <p className="text-label-caps text-[var(--color-on-surface-variant)] uppercase tracking-widest">
+          <h1 className="text-label-caps text-[var(--color-on-surface-variant)] uppercase tracking-widest">
             Order {formatOrderId(order.id)}
-          </p>
+          </h1>
           <p className="text-body-md text-[var(--color-on-surface-variant)] mt-1">
             Placed {formatDate(order.created_at)}
           </p>

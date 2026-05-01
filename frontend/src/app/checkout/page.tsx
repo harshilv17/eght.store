@@ -161,6 +161,7 @@ export default function CheckoutPage() {
 
   return (
     <div className="max-w-[1440px] mx-auto px-6 md:px-10 py-10">
+      <h1 className="sr-only">Checkout</h1>
       <div className="grid grid-cols-1 lg:grid-cols-[1fr_480px] gap-12 lg:gap-20">
         {/* Left — form */}
         <div className="flex flex-col gap-10">
