@@ -153,6 +153,8 @@ frontend/
 | 2026-05-01 | Multi-currency canonical = INR + FX table | Backend stores INR; product list/detail and `/cart/totals` return `currency` + converted display amounts via fixed-rate `COUNTRIES` table in `backend/src/utils/pricing.js`. Razorpay always charges INR (paise). |
 | 2026-05-01 | Country detection via cookie + IP geo | `proxy.ts` seeds `country` cookie from `x-vercel-ip-country` / `cf-ipcountry`; user override stored back to cookie; backend `resolveCountry(req)` reads query → cookie → header → default IN. |
 | 2026-05-01 | `force-dynamic` retained on shop pages | Justified: product prices now vary per-request by country cookie/IP. Static prerender would cache INR-only HTML for all visitors. Build-time timeout that originally prompted the flag is also addressed since dynamic pages skip prerender entirely. |
+| 2026-05-02 | Orders snapshot display currency + breakdown | New columns `country_code`, `display_currency`, `display_total`, `display_breakdown` (JSONB) on `orders`. Set at create time so receipts reproduce the customer-facing total even if FX rates or country rules change later. INR canonical (`total_amount`) remains authoritative for Razorpay/refunds. Migration `004_orders_currency.sql`. |
+| 2026-05-02 | FX refresh via free open.er-api.com | `backend/scripts/refresh-fx.js` (npm `fx:refresh` / `fx:write`). Runnable manually or via any cron (Vercel/GitHub Actions). No API key. INR base. Updates `FX_RATES` + `FX_UPDATED_AT` env when invoked with `--write`. |
 
 ---
 
@@ -283,10 +285,21 @@ frontend/
   - `components/layout/CountrySwitcher.tsx` — accessible listbox in Footer; sets cookie, reloads page.
   - `lib/api.ts` adds `configApi.fx()` + `uploadApi.sign()`.
 - **Verify:** lint clean, `next build` green, 17 routes incl. `/opengraph-image` + `/twitter-image`. Backend `node --check` clean on all touched files. Pricing util smoke confirmed (IN ₹3000→₹3540, US ₹5000→$90, GB ₹20000→£228).
-- **Loose ends remaining:**
-  - Admin upload UI (route exists; no consumer yet).
-  - FX cron job (env-only override; auto-refresh deferred until rate provider picked).
-  - Cart/Order persisted records still INR canonical; display only converts client-side.
+- **Loose ends remaining (v1):**
+  - Admin upload UI (route exists; no consumer yet — separate scope).
+
+### Session 7b — 2026-05-02 (loose-ends sweep, commit `c55b4a1`)
+- **Order currency snapshot:**
+  - Migration `004_orders_currency.sql`: `country_code`, `display_currency`, `display_total NUMERIC(12,2)`, `display_breakdown JSONB`.
+  - `OrderModel.createOrder` accepts `country, displayCurrency, displayTotal, displayBreakdown`; persists alongside INR canonical.
+  - `payment.service.createPaymentOrder` populates the snapshot from `computeTotals` output.
+  - `getUserOrders` returns snapshot fields for list views.
+  - `types/order.ts` extended; `OrderDetail` shows display breakdown (subtotal/shipping/tax) + total in customer currency, with "Charged ₹X INR" footnote when display ≠ INR; `OrdersList` total uses `display_total` when present.
+- **FX refresh script:**
+  - `backend/scripts/refresh-fx.js` fetches `https://open.er-api.com/v6/latest/INR` (no API key), prints `FX_RATES=...` + `FX_UPDATED_AT=...`. `--write` rewrites `.env` in place. npm scripts: `fx:refresh` (print), `fx:write` (write).
+  - Smoke test: 2026-05-01 rates returned cleanly (USD 0.010529 / GBP 0.007782 / AED 0.038667).
+  - Cron-ready; document in deployment when ops infra is picked.
+- **Verify:** lint clean, build green, backend syntax checked. Migration not yet applied to live DB; run `npm run migrate` on next backend boot.
 
 ## Next.js Version Note
 Running **Next.js 16.2.4** (not 15). Key differences:
