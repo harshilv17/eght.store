@@ -17,7 +17,7 @@
 | Database | PostgreSQL (raw `pg`) | No Prisma, no ORM — raw SQL |
 | Auth | JWT | Access + refresh token pair |
 | Payments | Razorpay | India-first payment gateway |
-| Image Storage | TBD (Cloudinary or Supabase Storage) | For product images |
+| Image Storage | Cloudinary | Signed uploads via `/api/admin/uploads/sign`. Requires `CLOUDINARY_*` env. |
 
 ---
 
@@ -246,6 +246,47 @@ frontend/
   - Created placeholder static pages for `/editorial`, `/about`, `/privacy`, `/terms`, `/shipping`, and `/stores` using consistent prose-invert styling.
   - Fixed a silent failure of `next/image` on the homepage by directly updating the `wide-leg-trouser` database record with a valid Unsplash image URL.
   - Solved a Next.js hydration mismatch error on the `<body>` tag caused by browser extensions injecting `__processed_xxx` attributes. Added `suppressHydrationWarning` to `<html>` and `<body>` in `layout.tsx`.
+
+### Session 7 — 2026-05-01 (Phase 7 leftovers + Phase 8 + multi-currency)
+- **Phase 7 leftovers (commit `8e5845b`):**
+  - `components/seo/BreadcrumbJsonLd.tsx` — wired into product + collection pages.
+  - `components/seo/CollectionJsonLd.tsx` (CollectionPage + ItemList) — wired into `/collections/[slug]`.
+  - `app/opengraph-image.tsx` + `app/twitter-image.tsx` — branded default OG via `next/og` ImageResponse (system font, no external file deps).
+  - Root `layout.tsx` metadata: `metadataBase`, `twitter` card, `openGraph.url`, `robots`.
+  - `error.tsx` + `loading.tsx` boundaries for `/account` and `/checkout` (parity with shop tree).
+- **Phase 8 a11y (same commit):**
+  - Global `prefers-reduced-motion` CSS rule + Drawer `motion-reduce:` modifiers.
+  - Removed dead Search button from Navbar (no v1 search → focus trap removed).
+  - `<h1 className="sr-only">Checkout</h1>` on checkout page.
+  - `OrderDetail` header `<p>` → `<h1>` (heading hierarchy).
+  - Drawer `setState`-in-effect React 19 lint error fixed via `useSyncExternalStore` SSR-safe pattern.
+  - ESLint config: `_`-prefix exemption for unused vars.
+- **Backend multi-currency + totals (commit `08ed707`):**
+  - `backend/src/utils/pricing.js` — `COUNTRIES` table (IN/US/GB/AE), `computeTotals`, `resolveCountry`, `detectCountryFromHeaders`. Tax: GST 18% IN, VAT 20% GB, 5% AE, 0% US. Shipping: IN ₹99 (free ≥ ₹2000), intl ₹2500 (free ≥ ₹15000).
+  - `GET /api/cart/totals?country=&pincode=` returns `{country, currency, taxLabel, subtotal, shipping, tax, total, ...Inr canonical}`.
+  - Product list/detail return `currency`, `display_price`, `display_compare_price` per resolved country.
+  - `payment.service.createPaymentOrder` charges via `computeTotals` (single source of truth) + returns `breakdown`. Razorpay still charges INR paise.
+  - Payment route: phone 7-20, postal 3-12 (international), `country` 2-letter optional.
+  - Frontend: `proxy.ts` seeds `country` cookie from `x-vercel-ip-country` / `cf-ipcountry` headers; `cartApi.totals(...)`; `OrderSummary` rewritten to fetch totals + show tax label; checkout disables Pay until totals load + shows server total in user currency; `ShippingMethodSelect` retired (server picks shipping in v1); pincode validation country-aware.
+- **Display prices + FX + uploads + switcher (commit `35eb39f`):**
+  - `backend/src/config/fx.js` — FX rates per 1 INR with `FX_RATES` JSON env override + `FX_UPDATED_AT` stamp.
+  - `pricing.js` refactored: `COUNTRY_RULES` composes tax + FX from config.
+  - `GET /api/config/fx` → `{defaultCountry, updatedAt, countries[]}`.
+  - `POST /api/admin/uploads/sign` (admin-only, JWT) — Cloudinary signed-upload signature using `CLOUDINARY_*` env. Returns 503 if not configured. Schema: `{folder, publicId?}`.
+  - `.env.example` documents `CLOUDINARY_*` + optional `FX_RATES` JSON.
+  - Frontend `store/fx.store.ts` — Zustand: `config`, `country`, `meta()`, `convert(inr) → {amount, currency, symbol}`.
+  - `providers.tsx` bootstraps FX + reads country cookie at mount.
+  - `PriceTag` resolution order: backend `display_price` → client FX convert → INR canonical.
+  - `ProductCard`, `ProductCardLarge`, `ProductDetailClient` pass display fields through.
+  - `CartItemRow` + `CartFooter` use FX `convert()` for per-line + subtotal.
+  - `format.formatCurrency` locale-aware (en-US, en-GB, en-AE, en-IN).
+  - `components/layout/CountrySwitcher.tsx` — accessible listbox in Footer; sets cookie, reloads page.
+  - `lib/api.ts` adds `configApi.fx()` + `uploadApi.sign()`.
+- **Verify:** lint clean, `next build` green, 17 routes incl. `/opengraph-image` + `/twitter-image`. Backend `node --check` clean on all touched files. Pricing util smoke confirmed (IN ₹3000→₹3540, US ₹5000→$90, GB ₹20000→£228).
+- **Loose ends remaining:**
+  - Admin upload UI (route exists; no consumer yet).
+  - FX cron job (env-only override; auto-refresh deferred until rate provider picked).
+  - Cart/Order persisted records still INR canonical; display only converts client-side.
 
 ## Next.js Version Note
 Running **Next.js 16.2.4** (not 15). Key differences:
