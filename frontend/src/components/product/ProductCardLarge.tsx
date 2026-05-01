@@ -51,7 +51,15 @@ export function ProductCardLarge({ product, badge, priority = true }: ProductCar
           <h3 className="text-body-lg text-[var(--color-primary)] font-semibold">{product.name}</h3>
           <p className="text-body-md text-[var(--color-on-surface-variant)]">{product.category_name}</p>
         </div>
-        <PriceTag price={product.price} comparePrice={product.compare_price} size="lg" className="shrink-0" />
+        <PriceTag
+          price={product.price}
+          comparePrice={product.compare_price}
+          displayPrice={product.display_price}
+          displayComparePrice={product.display_compare_price}
+          currency={product.currency}
+          size="lg"
+          className="shrink-0"
+        />
       </div>
     </Link>
   );

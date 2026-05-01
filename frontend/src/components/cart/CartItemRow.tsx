@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { CartItem, useCartStore } from "@/store/cart.store";
 import { useUiStore } from "@/store/ui.store";
+import { useFxStore } from "@/store/fx.store";
 import { cartApi } from "@/lib/api";
 import { mapCartResponse } from "@/lib/cart-utils";
 import { CartApiResponse } from "@/types/cart";
@@ -17,9 +18,11 @@ interface CartItemRowProps {
 export function CartItemRow({ item }: CartItemRowProps) {
   const { updateQtyOptimistic, removeItemOptimistic, setItems, close } = useCartStore();
   const { addToast } = useUiStore();
+  const fxConvert = useFxStore((s) => s.convert);
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const image = item.images[0] ?? null;
+  const lineTotal = fxConvert(item.price * item.quantity);
 
   function scheduleSync(variantId: string, newQty: number) {
     if (debounceRef.current) clearTimeout(debounceRef.current);
@@ -154,7 +157,7 @@ export function CartItemRow({ item }: CartItemRowProps) {
           </div>
 
           <p className="text-body-md font-bold text-[var(--color-on-surface)]">
-            {formatCurrency(item.price * item.quantity)}
+            {formatCurrency(lineTotal.amount, lineTotal.currency)}
           </p>
         </div>
       </div>

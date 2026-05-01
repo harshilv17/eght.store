@@ -1,15 +1,23 @@
 // Country / currency / shipping / tax pricing rules.
-// Prices are stored canonical in INR. Display currency converted via fixed FX.
-// FX rates are per 1 INR; update via cron in future.
+// Prices are stored canonical in INR. Display currency converted via FX_RATES (config/fx.js).
 
-export const COUNTRIES = {
-  IN: { currency: 'INR', symbol: '₹', fxFromInr: 1, taxRate: 0.18, taxLabel: 'GST' },
-  US: { currency: 'USD', symbol: '$', fxFromInr: 0.012, taxRate: 0, taxLabel: 'Tax' },
-  GB: { currency: 'GBP', symbol: '£', fxFromInr: 0.0095, taxRate: 0.20, taxLabel: 'VAT' },
-  AE: { currency: 'AED', symbol: 'AED', fxFromInr: 0.044, taxRate: 0.05, taxLabel: 'VAT' },
+import { getFx } from '../config/fx.js';
+
+const COUNTRY_RULES = {
+  IN: { currency: 'INR', symbol: '₹', taxRate: 0.18, taxLabel: 'GST' },
+  US: { currency: 'USD', symbol: '$', taxRate: 0, taxLabel: 'Tax' },
+  GB: { currency: 'GBP', symbol: '£', taxRate: 0.20, taxLabel: 'VAT' },
+  AE: { currency: 'AED', symbol: 'AED', taxRate: 0.05, taxLabel: 'VAT' },
 };
 
 export const DEFAULT_COUNTRY = 'IN';
+
+export const COUNTRIES = Object.fromEntries(
+  Object.entries(COUNTRY_RULES).map(([code, r]) => [
+    code,
+    { ...r, fxFromInr: getFx(r.currency) },
+  ])
+);
 
 export function getCountryMeta(code) {
   return COUNTRIES[code] ?? COUNTRIES[DEFAULT_COUNTRY];

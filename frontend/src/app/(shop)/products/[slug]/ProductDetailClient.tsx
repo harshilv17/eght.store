@@ -6,7 +6,7 @@ import { ColorSwatches } from "@/components/product/ColorSwatches";
 import { SizeSelector } from "@/components/product/SizeSelector";
 import { AddToBagButton } from "@/components/product/AddToBagButton";
 import { Accordion } from "@/components/ui/Accordion";
-import { formatCurrency } from "@/lib/format";
+import { PriceTag } from "@/components/product/PriceTag";
 
 const ACCORDION_ITEMS = [
   {
@@ -60,14 +60,16 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <h1 className="text-headline-lg text-[var(--color-primary)] uppercase leading-tight">
           {product.name}
         </h1>
-        <p className="text-body-lg text-[var(--color-secondary)] mt-2">
-          {formatCurrency(product.price)}
-          {product.compare_price != null && product.compare_price > product.price && (
-            <span className="ml-3 line-through text-[var(--color-on-surface-variant)]">
-              {formatCurrency(product.compare_price)}
-            </span>
-          )}
-        </p>
+        <div className="mt-2">
+          <PriceTag
+            price={product.price}
+            comparePrice={product.compare_price}
+            displayPrice={product.display_price}
+            displayComparePrice={product.display_compare_price}
+            currency={product.currency}
+            size="lg"
+          />
+        </div>
       </div>
 
       {/* Description */}

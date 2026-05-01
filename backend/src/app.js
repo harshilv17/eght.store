@@ -11,6 +11,8 @@ import cartRoutes from './modules/cart/cart.routes.js';
 import orderRoutes from './modules/order/order.routes.js';
 import paymentRoutes from './modules/payment/payment.routes.js';
 import userRoutes from './modules/user/user.routes.js';
+import configRoutes from './modules/config/config.routes.js';
+import uploadRoutes from './modules/upload/upload.routes.js';
 
 const app = express();
 
@@ -39,6 +41,8 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/config', configRoutes);
+app.use('/api/admin/uploads', uploadRoutes);
 
 app.use(errorMiddleware);
 

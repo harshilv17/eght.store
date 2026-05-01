@@ -1,5 +1,6 @@
 import { ApiError } from "@/types/api";
 import { CartApiResponse, CartTotals, RawCartItem } from "@/types/cart";
+import { FxConfig } from "@/store/fx.store";
 import { BackendUser, Address } from "@/types/user";
 import { Order, OrderSummary } from "@/types/order";
 import { env } from "./env";
@@ -174,4 +175,24 @@ export const userApi = {
 export const orderApi = {
   list: () => apiFetch<OrderSummary[]>("/orders"),
   get: (id: string) => apiFetch<Order>(`/orders/${id}`),
+};
+
+export const configApi = {
+  fx: () => apiFetch<FxConfig>("/config/fx", { skipAuth: true }),
+};
+
+export const uploadApi = {
+  sign: (body: { folder?: string; publicId?: string }) =>
+    apiFetch<{
+      cloudName: string;
+      apiKey: string;
+      timestamp: number;
+      signature: string;
+      folder: string;
+      publicId: string | null;
+      uploadUrl: string;
+    }>("/admin/uploads/sign", {
+      method: "POST",
+      body: JSON.stringify(body),
+    }),
 };

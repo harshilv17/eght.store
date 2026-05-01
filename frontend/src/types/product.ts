@@ -18,6 +18,10 @@ export interface Product {
   category_name: string;
   category_slug: string;
   total_stock: number;
+  // Multi-currency display fields populated by backend per requested country.
+  currency?: string;
+  display_price?: number;
+  display_compare_price?: number | null;
 }
 
 export interface ProductDetail extends Product {

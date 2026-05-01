@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { CountrySwitcher } from "./CountrySwitcher";
 
 const LINKS = [
   { label: "PRIVACY", href: "/privacy" },
@@ -45,10 +46,13 @@ export function Footer() {
           )}
         </nav>
 
-        {/* Copyright */}
-        <p className="text-label-caps text-[var(--color-primary)] font-bold">
-          © 2025 EGHT STUDIOS. ALL RIGHTS RESERVED.
-        </p>
+        {/* Right cluster */}
+        <div className="flex items-center gap-6">
+          <CountrySwitcher />
+          <p className="text-label-caps text-[var(--color-primary)] font-bold">
+            © 2025 EGHT STUDIOS. ALL RIGHTS RESERVED.
+          </p>
+        </div>
       </div>
     </footer>
   );

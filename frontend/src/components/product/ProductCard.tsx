@@ -54,7 +54,14 @@ export function ProductCard({ product, size = "md", priority = false }: ProductC
             {product.category_name}
           </p>
         </div>
-        <PriceTag price={product.price} comparePrice={product.compare_price} className="shrink-0" />
+        <PriceTag
+          price={product.price}
+          comparePrice={product.compare_price}
+          displayPrice={product.display_price}
+          displayComparePrice={product.display_compare_price}
+          currency={product.currency}
+          className="shrink-0"
+        />
       </div>
     </Link>
   );
