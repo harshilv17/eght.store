@@ -26,6 +26,5 @@ services:
 databases:
   - name: eght-db
     databaseName: eght_db
-    user: postgres
     region: singapore # must match the web service region above
     plan: free
