@@ -1,7 +1,7 @@
 import 'dotenv/config';
 
 const required = [
-  'JWT_SECRET', 'RAZORPAY_KEY_ID', 'RAZORPAY_KEY_SECRET'
+  'JWT_SECRET'
 ];
 
 // Either DATABASE_URL or individual DB vars must be present

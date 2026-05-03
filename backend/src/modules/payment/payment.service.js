@@ -6,10 +6,12 @@ import * as CartModel from '../cart/cart.model.js';
 import * as OrderModel from '../order/order.model.js';
 import { computeTotals } from '../../utils/pricing.js';
 
-const razorpay = new Razorpay({
-  key_id: env.razorpay.keyId,
-  key_secret: env.razorpay.keySecret,
-});
+const razorpay = (env.razorpay.keyId && env.razorpay.keySecret) 
+  ? new Razorpay({
+      key_id: env.razorpay.keyId,
+      key_secret: env.razorpay.keySecret,
+    })
+  : null;
 
 export async function createPaymentOrder({ userId, sessionId, shippingAddress, country }) {
   const cartId = await CartModel.findOrCreateCart(userId, sessionId);
@@ -20,6 +22,10 @@ export async function createPaymentOrder({ userId, sessionId, shippingAddress, c
   const subtotalInr = items.reduce((sum, i) => sum + parseFloat(i.price) * i.quantity, 0);
   const totals = computeTotals({ subtotalInr, country: country || shippingAddress?.country || 'IN' });
   const amountInPaise = Math.round(totals.totalInr * 100);
+
+  if (!razorpay) {
+    throw new AppError('Payment system is not configured', 503);
+  }
 
   const rzpOrder = await razorpay.orders.create({
     amount: amountInPaise,
