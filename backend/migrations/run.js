@@ -18,7 +18,19 @@ const client = process.env.DATABASE_URL
     });
 
 async function run() {
-  await client.connect();
+  let retries = 5;
+  while (retries > 0) {
+    try {
+      await client.connect();
+      console.log('🐘 Connected to database for migrations');
+      break;
+    } catch (err) {
+      retries -= 1;
+      console.log(`⏳ Database not ready, retrying... (${retries} attempts left)`);
+      if (retries === 0) throw err;
+      await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
+    }
+  }
 
   await client.query(`
     CREATE TABLE IF NOT EXISTS _migrations (
