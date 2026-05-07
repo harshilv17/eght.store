@@ -18,6 +18,20 @@ export function authenticate(req, res, next) {
   }
 }
 
+// Sets req.user if valid Bearer token present, continues regardless.
+export function optionalAuth(req, res, next) {
+  const authHeader = req.headers.authorization;
+  if (authHeader?.startsWith('Bearer ')) {
+    const token = authHeader.slice(7);
+    try {
+      req.user = jwt.verify(token, env.jwt.secret);
+    } catch {
+      // invalid token — continue as guest
+    }
+  }
+  next();
+}
+
 export function requireAdmin(req, res, next) {
   if (req.user?.role !== 'admin') {
     return next(new AppError('Admin access required', 403));

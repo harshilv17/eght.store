@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { authenticate } from '../../middlewares/auth.middleware.js';
+import { authenticate, optionalAuth } from '../../middlewares/auth.middleware.js';
 import * as OrderModel from './order.model.js';
 import { sendSuccess } from '../../utils/helpers.js';
 import { AppError } from '../../middlewares/error.middleware.js';
@@ -13,9 +13,11 @@ router.get('/', authenticate, async (req, res, next) => {
   } catch (err) { next(err); }
 });
 
-router.get('/:id', authenticate, async (req, res, next) => {
+// optionalAuth: authenticated users see only their own order; unauthenticated
+// callers (e.g. the server-rendered confirmation page) can read by UUID alone.
+router.get('/:id', optionalAuth, async (req, res, next) => {
   try {
-    const order = await OrderModel.getOrderById(req.params.id, req.user.sub);
+    const order = await OrderModel.getOrderById(req.params.id, req.user?.sub ?? null);
     if (!order) throw new AppError('Order not found', 404);
     sendSuccess(res, order);
   } catch (err) { next(err); }
