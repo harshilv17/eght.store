@@ -28,7 +28,8 @@ export function Providers({ children }: { children: React.ReactNode }) {
         clear();
         regenerateSessionId();
         window.location.href = "/account/login";
-      }
+      },
+      (token) => useAuthStore.getState().setAccessToken(token)
     );
   }, [clear]);
 

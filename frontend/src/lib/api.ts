@@ -7,13 +7,16 @@ import { env } from "./env";
 
 let _getAccessToken: (() => string | null) | null = null;
 let _onRefreshFail: (() => void) | null = null;
+let _setAccessToken: ((token: string) => void) | null = null;
 
 export function initApiClient(
   getAccessToken: () => string | null,
-  onRefreshFail: () => void
+  onRefreshFail: () => void,
+  setAccessToken?: (token: string) => void
 ) {
   _getAccessToken = getAccessToken;
   _onRefreshFail = onRefreshFail;
+  _setAccessToken = setAccessToken ?? null;
 }
 
 function getSessionIdFromCookie(): string | null {
@@ -64,7 +67,7 @@ export async function apiFetch<T>(
   if (res.status === 401 && !_isRetry && !skipAuth) {
     const newToken = await attemptRefresh();
     if (newToken) {
-      // Token store update handled by the caller via initApiClient
+      _setAccessToken?.(newToken);
       return apiFetch<T>(path, { ...init, _isRetry: true });
     } else {
       _onRefreshFail?.();
