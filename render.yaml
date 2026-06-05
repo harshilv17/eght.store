@@ -11,10 +11,10 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # Neon free Postgres (does not expire like Render's free DB).
+      # Set this value in the Render dashboard → Environment → DATABASE_URL.
       - key: DATABASE_URL
-        fromDatabase:
-          name: eght-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true # Render auto-generates a secure random value
       - key: JWT_ACCESS_EXPIRES_IN
@@ -24,8 +24,4 @@ services:
       - key: FRONTEND_URL
         value: https://eght-store.vercel.app # 🔴 Replace with your actual frontend URL
 
-databases:
-  - name: eght-db
-    databaseName: eght_db
-    region: oregon # 🟢 Must match web service
-    plan: free
+# Render free Postgres expires after 30 days. Using external Neon DB instead (see DATABASE_URL above).

@@ -1,10 +1,20 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function Hero() {
   return (
-    <section className="relative w-full flex items-end pb-24 px-[var(--spacing-margin-edge)] bg-[var(--color-inverse-surface)]" style={{ minHeight: 600, height: "clamp(600px, 70vh, 921px)" }}>
-      {/* Subtle grain overlay for depth */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-[1]" />
+    <section className="relative w-full flex items-end pb-24 px-[var(--spacing-margin-edge)] bg-[var(--color-inverse-surface)] overflow-hidden" style={{ minHeight: 600, height: "clamp(600px, 70vh, 921px)" }}>
+      {/* Background image */}
+      <Image
+        src="https://images.unsplash.com/photo-1509631179647-0177331693ae?w=1920&q=80"
+        alt="EGHT — The Void Collection"
+        fill
+        priority
+        sizes="100vw"
+        className="object-cover object-center grayscale"
+      />
+      {/* Scrim: darken bottom for white heading + buttons, slight top tint for legibility */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/30 z-[1]" />
 
       <div className="relative z-10 w-full max-w-[1440px] mx-auto flex flex-col gap-6">
         <h1

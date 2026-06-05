@@ -74,7 +74,7 @@ INSERT INTO products (id, name, slug, description, price, compare_price, images,
     'Pressed crease, wide leg opening. Wool-poly blend. Dressed down or up.',
     6500.00,
     NULL,
-    ARRAY['https://images.unsplash.com/photo-1594938298603-c8148c4b4cb5?w=800'],
+    ARRAY['https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=800'],
     'a1000000-0000-0000-0000-000000000003',
     ARRAY[]::TEXT[]
   )

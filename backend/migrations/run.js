@@ -7,30 +7,39 @@ import 'dotenv/config';
 const { Client } = pg;
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-const client = process.env.DATABASE_URL
-  ? new Client({ connectionString: process.env.DATABASE_URL, ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false })
-  : new Client({
-      host: process.env.DB_HOST,
-      port: process.env.DB_PORT,
-      database: process.env.DB_NAME,
-      user: process.env.DB_USER,
-      password: process.env.DB_PASSWORD,
-    });
+function createClient() {
+  return process.env.DATABASE_URL
+    ? new Client({ connectionString: process.env.DATABASE_URL, ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false })
+    : new Client({
+        host: process.env.DB_HOST,
+        port: process.env.DB_PORT,
+        database: process.env.DB_NAME,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+      });
+}
 
-async function run() {
+async function connectWithRetry() {
   let retries = 5;
   while (retries > 0) {
+    // pg Client is one-shot: a failed connect cannot be reused, so make a fresh one each attempt.
+    const client = createClient();
     try {
       await client.connect();
       console.log('🐘 Connected to database for migrations');
-      break;
+      return client;
     } catch (err) {
+      await client.end().catch(() => {});
       retries -= 1;
-      console.log(`⏳ Database not ready, retrying... (${retries} attempts left)`);
+      console.log(`⏳ Database not ready, retrying... (${retries} attempts left): ${err.message}`);
       if (retries === 0) throw err;
       await new Promise(resolve => setTimeout(resolve, 3000)); // Wait 3 seconds
     }
   }
+}
+
+async function run() {
+  const client = await connectWithRetry();
 
   await client.query(`
     CREATE TABLE IF NOT EXISTS _migrations (
