@@ -3,11 +3,9 @@
 
 import { getFx } from '../config/fx.js';
 
+// Store is INR-only. Single rule so every price, total, and config response is in rupees.
 const COUNTRY_RULES = {
   IN: { currency: 'INR', symbol: '₹', taxRate: 0.18, taxLabel: 'GST' },
-  US: { currency: 'USD', symbol: '$', taxRate: 0, taxLabel: 'Tax' },
-  GB: { currency: 'GBP', symbol: '£', taxRate: 0.20, taxLabel: 'VAT' },
-  AE: { currency: 'AED', symbol: 'AED', taxRate: 0.05, taxLabel: 'VAT' },
 };
 
 export const DEFAULT_COUNTRY = 'IN';
